@@ -11,14 +11,22 @@ var rabbitmq = builder.AddRabbitMQ("rabbitmq", rmqUser, rmqPassword)
                       //.WithEndpoint(15672, 15672);
 
 // Dein Publisher-Projekt
+// PostgreSQL Datenbank für Outbox
+var pg = builder.AddPostgres("pg")
+                .WithDataVolume()
+                .AddDatabase("outboxdb");
+
 var publisher = builder.AddProject<Projects.MessagePublisher>("messagepublisher")
                        .WithReference(rabbitmq)
-                       // hier sagst du: warte auf rabbitmq, bis es läuft
-                       .WaitFor(rabbitmq);
+                       .WithReference(pg)
+                       .WaitFor(rabbitmq)
+                       .WaitFor(pg);
 
 // Consumer Projekt
 var consumer = builder.AddProject("messageconsumer", "../MessageConsumer/MessageConsumer.csproj")
                       .WithReference(rabbitmq)
-                      .WaitFor(rabbitmq);
+                      .WithReference(pg)
+                      .WaitFor(rabbitmq)
+                      .WaitFor(pg);
 
 builder.Build().Run();

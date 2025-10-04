@@ -30,6 +30,11 @@ public class Program
 
                 cfg.ReceiveEndpoint("something-happened-queue", e =>
                 {
+                    // In-Memory Outbox aktivieren (stellt sicher, dass Publish/Send innerhalb der Consumer-
+                    // Pipeline erst nach erfolgreichem Abschluss der Message verarbeitet werden und verhindert
+                    // doppelte Publikationen bei Retries). Für persistente, echte Outbox (EF Core, Postgres etc.)
+                    // müsste ein DbContext + AddEntityFrameworkOutbox konfiguriert werden.
+                    e.UseInMemoryOutbox(context);
                     e.ConfigureConsumer<SomethingHappenedConsumer>(context);
                 });
             });
