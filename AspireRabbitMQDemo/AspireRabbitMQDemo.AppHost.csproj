@@ -17,4 +17,8 @@
     <PackageReference Include="Aspire.Hosting.RabbitMQ" Version="9.5.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MessagePublisher\MessagePublisher.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,18 +1,19 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-// Parameter deklarieren mit Default-Werten
+// Parameter, RabbitMQ etc.
 var rmqUser = builder.AddParameter("RabbitMQUser", "guest", secret: false);
 var rmqPassword = builder.AddParameter("RabbitMQPassword", "guest", secret: false);
 
-// RabbitMQ mit diesen Parametern hinzufügen
 var rabbitmq = builder.AddRabbitMQ("rabbitmq", rmqUser, rmqPassword)
                       .WithManagementPlugin();
+                      // optional: fixe Port-Mappings
+                      //.WithEndpoint(5672, 5672)
+                      //.WithEndpoint(15672, 15672);
 
-// Parameter zur Ressource zuordnen (Parent Relationship)
-rmqUser.WithParentRelationship(rabbitmq);
-rmqPassword.WithParentRelationship(rabbitmq);
-
-// Optional: zusätzliches Setup, Endpoints etc.
-// rabbitmq = rabbitmq.WithEndpoint(...);
+// Dein Publisher-Projekt
+var publisher = builder.AddProject<Projects.MessagePublisher>("messagepublisher")
+                       .WithReference(rabbitmq)
+                       // hier sagst du: warte auf rabbitmq, bis es läuft
+                       .WaitFor(rabbitmq);
 
 builder.Build().Run();
