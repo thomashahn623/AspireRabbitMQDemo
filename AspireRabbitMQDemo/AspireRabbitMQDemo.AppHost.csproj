@@ -19,6 +19,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MessagePublisher\MessagePublisher.csproj" />
+    <ProjectReference Include="..\MessageConsumer\MessageConsumer.csproj" />
+    <ProjectReference Include="..\Contracts\Contracts.csproj" />
   </ItemGroup>
 
 </Project>

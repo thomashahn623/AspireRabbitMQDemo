@@ -16,4 +16,9 @@ var publisher = builder.AddProject<Projects.MessagePublisher>("messagepublisher"
                        // hier sagst du: warte auf rabbitmq, bis es läuft
                        .WaitFor(rabbitmq);
 
+// Consumer Projekt
+var consumer = builder.AddProject("messageconsumer", "../MessageConsumer/MessageConsumer.csproj")
+                      .WithReference(rabbitmq)
+                      .WaitFor(rabbitmq);
+
 builder.Build().Run();

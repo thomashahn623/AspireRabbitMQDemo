@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using Contracts;
 
 namespace MessagePublisher;
 
@@ -43,8 +44,6 @@ public class Program
     }
 }
 
-// Beispiel-Event (Contract)
-public record SomethingHappened(Guid Id, string Source, DateTime OccurredAtUtc);
 
 // Worker, der periodisch Events publisht
 public class MessagePublishingWorker(ILogger<MessagePublishingWorker> logger, IPublishEndpoint publish)
