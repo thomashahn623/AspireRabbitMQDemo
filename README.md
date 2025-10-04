@@ -19,7 +19,7 @@ This repository contains a minimal [.NET Aspire](https://learn.microsoft.com/dot
    ```
 2. Launch the distributed application (from the repository root):
    ```bash
-   dotnet run --project AspireRabbitMQDemo/AppHost1.csproj
+   dotnet run --project AspireRabbitMQDemo/AspireRabbitMQDemo.AppHost.csproj
    ```
 3. Wait for Docker to pull and start the RabbitMQ container. The console output shows the allocated ports.
 
@@ -44,12 +44,12 @@ You can also export environment variables before launching:
 export RabbitMQUser=myuser
 export RabbitMQPassword=mypassword
 cd ..
-dotnet run --project AspireRabbitMQDemo/AppHost1.csproj
+dotnet run --project AspireRabbitMQDemo/AspireRabbitMQDemo.AppHost.csproj
 ```
 
 ## Project Structure
 - `AspireRabbitMQDemo/Program.cs` - configures the distributed application and RabbitMQ resource
-- `AspireRabbitMQDemo/AppHost1.csproj` - AppHost project with Aspire package references
+- `AspireRabbitMQDemo/AspireRabbitMQDemo.AppHost.csproj` - AppHost project with Aspire package references
 - `AspireRabbitMQDemo/appsettings*.json` - logging configuration applied to the host
 
 ## Next Steps
