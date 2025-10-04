@@ -64,7 +64,7 @@ public class MessagePublishingWorker(ILogger<MessagePublishingWorker> logger, IP
             await publish.Publish(evt, stoppingToken);
             logger.LogInformation("Event publiziert: {Id} @ {Time}", evt.Id, evt.OccurredAtUtc);
 
-            await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
+            await Task.Delay(TimeSpan.FromMilliseconds(5), stoppingToken);
         }
     }
 }
